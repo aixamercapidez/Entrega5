@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form</title>
+</head>
+<body>
+    <section class="form-register">
+        <form action="/api/products" method="POST" enctype="multipart/form-data">
+            <h4>Add a Product</h4>
+            <input  type="text" name="title" id="title" placeholder="Product title" required>
+            <input  type="text" name="description" id="description" placeholder="Product description" required>
+            <input  type="number" name="price" id="price" placeholder="Product price" required>
+            <input  type="string" name="thumbnail" id="thumbnail" placeholder="Image url">
+            <input  type="text" name="code" id="code" placeholder="Product code" required>  
+            <input type="number" name="stock" id="stock" placeholder="Product stock" required>
+            <input type="text" name="category" id="category" placeholder="Product category" required>
+            <input class="botons" type="submit" value="sumbit">
+
+
+        </form>
+
+    </section>
+</body>
+</html>
