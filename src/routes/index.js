@@ -2,7 +2,7 @@ const { Router } = require('express')
 const {uploader} = require('../utils/multer.js')
 const productRouter = require('./products.router.js')
 const productCart = require('./carts.router.js')
-const messageRouter = require('./message.rputer.js')
+const messageRouter = require('./message.router.js')
 
 
 const router = Router()

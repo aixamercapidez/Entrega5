@@ -13,7 +13,7 @@ const messageSchema = new Schema({
     },
 })
 
-const messageModel = model(collection, productSchema)
+const messageModel = model(collection, messageSchema)
 
 module.exports = {
     messageModel
