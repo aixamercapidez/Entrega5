@@ -16,11 +16,11 @@ router.get('/', async (req,res)=>{
     }
 })
 
-router.post('/', async (request, response)=>{
+router.post('/', async (req, res)=>{
     try {
         
-
-        let result = await messageManager.addmessage()
+        const newmessage = req.body
+        let result = await messageManager.addmessage(newmessage)
 
 
         res.status(200).send({

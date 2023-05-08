@@ -49,3 +49,18 @@ GET http://localhost:8080/api/carts/6456caff02edaee996b31da1
 
 ### POST 
 POST http://localhost:8080/api/carts/6456caff02edaee996b31da1/product/1
+
+
+
+// mensajes
+### GET 
+GET http://localhost:8080/api/message
+### POST 
+POST http://localhost:8080/api/message/
+Content-Type: application/json
+
+{
+    "name": "Persona1",
+    "message": "hola"
+    
+}

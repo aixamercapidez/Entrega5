@@ -1,6 +1,6 @@
 const {Schema, model} = require('mongoose')
 
-const collection = 'products'
+const collection = 'message'
 
 const messageSchema = new Schema({
     name: {
