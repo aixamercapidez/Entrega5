@@ -3,14 +3,11 @@ const {Schema, model} = require('mongoose')
 const collection = 'message'
 
 const messageSchema = new Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    message: {
-        type: String,
-        required: true
-    },
+  
+        message: String,
+       
+    
+    
 })
 
 const messageModel = model(collection, messageSchema)
