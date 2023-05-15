@@ -11,7 +11,7 @@ const router = Router()
 // router.use('/', (req,res)=>{
 //     res.send('Hola mundo')
 // })
-router.use('/api/productos', productRouter)
+router.use('/api/products', productRouter)
 router.use('/api/carts', productCart)
 router.use('/api/message', messageRouter)
 

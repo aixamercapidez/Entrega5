@@ -1,24 +1,26 @@
 // productos
 
 ### GET 
-GET http://localhost:8080/api/productos
+GET http://localhost:8080/api/products
 ### GET 
-GET http://localhost:8080/api/productos/64504bcd2d67f6b8dc4b2385
+GET http://localhost:8080/api/products/64504bcd2d67f6b8dc4b2385
 ### POST 
-POST http://localhost:8080/api/productos/
+POST http://localhost:8080/api/products/
 Content-Type: application/json
 
 {
     "title": "Producto 3",
     "description": "descripción 2",
     "thumbnail": "",
-    "price": 2500,
+    "price": 500,
     "stock": 100,
-    "code": "0004"
+    "code": "00019",
+    "category": "clothe",
+    "status":"true"
 }
 
 ### PUT 
-PUT http://localhost:8080/api/productos/64504bcd2d67f6b8dc4b2385
+PUT http://localhost:8080/api/products/64504bcd2d67f6b8dc4b2385
 Content-Type: application/json
 
 {
@@ -30,7 +32,7 @@ Content-Type: application/json
     "code": "0002"
 }
 ###
-DELETE http://localhost:8080/api/productos/6456c960eb70c1d7b7429fcb
+DELETE http://localhost:8080/api/products/6456c960eb70c1d7b7429fcb
 
 
 
@@ -48,8 +50,11 @@ GET http://localhost:8080/api/carts/6456caff02edaee996b31da1
 
 
 ### POST 
-POST http://localhost:8080/api/carts/6456caff02edaee996b31da1/product/1
+POST http://localhost:8080/api/carts/6456caff02edaee996b31da1/product/64504bcd2d67f6b8dc4b2385
 
+
+### DELEtE
+DELETE http://localhost:8080/api/carts/6456caff02edaee996b31da1
 
 
 // mensajes
@@ -60,7 +65,7 @@ POST http://localhost:8080/api/message/
 Content-Type: application/json
 
 {
-    "name": "Persona1",
-    "message": "hola"
+    "name": "Persona2",
+    "message": "hola!"
     
 }

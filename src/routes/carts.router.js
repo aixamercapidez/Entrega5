@@ -1,6 +1,6 @@
 const {Router} =require('express')
 const CartManager = require('../dao/mongo/cart.mongo.js')
-
+const { cartModel } = require("../dao/mongo/model/cart.model.js")
 const router = Router()
 
 router.get('/', async (req,res)=>{
@@ -11,8 +11,11 @@ router.get('/', async (req,res)=>{
             payload: carts
         })
         
+
+
+
     } catch (error) {
-        cconsole.log(error)
+        console.log(error)
     }
 })
 
@@ -32,8 +35,30 @@ router.post('/', async (request, response)=>{
     }
 })
 
+/*router.get('/:cid', async (req,res)=>{
+    try {
+        const {cid} = req.query
+        let carts = await cartModel.paginate({}, {  lean: true })
 
-router.get('/:cid', async (req,res)=>{
+        
+        const { docs, hasPrevPage, hasNextPage, prevPage, nextPage, totalPages } = carts
+        res.render('carts', {
+            status: 'success',
+            carts: docs,
+            hasPrevPage,
+            hasNextPage,
+            prevPage,
+            nextPage,
+            totalPages
+           
+        })
+
+
+    } catch (error) {
+        console.log(error)
+    }
+})*/
+/*router.get('/:cid', async (req,res)=>{
     try {
         const {cid} = req.params
         let cart = await CartManager.getCartById(cid)
@@ -41,6 +66,25 @@ router.get('/:cid', async (req,res)=>{
             status: 'success',
             payload: cart
         })
+
+
+
+    } catch (error) {
+        console.log(error)
+    }
+})*/
+router.get('/:cid', async (req,res)=>{
+    try {
+        const {cid} = req.params
+        let cart = await CartManager.getCartById(cid)
+        res.render('carts',{
+            status: 'success',
+            payload: cart,
+            carts:cart
+        })
+
+
+
     } catch (error) {
         console.log(error)
     }
@@ -50,7 +94,70 @@ router.post('/:cid/product/:pid', async (req, res)=>{
     try{
         const {cid} = req.params
         const {pid} = req.params
+        
         const cart = await CartManager.addProduct(cid,pid)
+        res.status(200).send({
+            status: 'success',
+            payload: cart
+        })
+
+    }catch(error){
+        console.log(error)
+    }
+})
+
+router.delete('/:cid/product/:pid', async (req, res)=>{
+    try{
+        const {cid} = req.params
+        const {pid} = req.params
+        
+        const cart = await CartManager.deleteProduct(cid,pid)
+        res.status(200).send({
+            status: 'success',
+            payload: cart
+        })
+
+    }catch(error){
+        console.log(error)
+    }
+})
+
+router.delete('/:cid', async (req, res)=>{
+    try{
+        const {cid} = req.params
+    
+        const cartdeleted = await CartManager.deleteCart(cid)
+        res.status(200).send({
+            status: 'success',
+            payload: cartdeleted
+        })
+
+    }catch(error){
+        console.log(error)
+    }
+})
+
+router.put('/:cid', async (req, res)=>{
+    try{
+        const {cid} = req.params
+        const {updatecart} = req.body
+        const cart = await CartManager.updateCart(cid,updatecart)
+        res.status(200).send({
+            status: 'success',
+            payload: cart
+        })
+
+    }catch(error){
+        console.log(error)
+    }
+})
+
+router.put('/:cid/product/:pid', async (req, res)=>{
+    try{
+        const {cid} = req.params
+        const {pid} = req.params
+        const {quantity} = req.body
+        const cart = await CartManager.Updatequantity(cid,pid,quantity)
         res.status(200).send({
             status: 'success',
             payload: cart

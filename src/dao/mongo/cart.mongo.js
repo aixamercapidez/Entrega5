@@ -42,13 +42,66 @@ class CartManagerMongo {
                     {$inc: {"Products.$.quantity": 1}}
                 )
             }
+            
 
 
         } catch (error) {
             return new Error(error)
         }
+        
     }
-   
+
+    async deleteProduct(cid,pid){
+        try {            
+            
+            return await cartModel.findOneAndUpdate(
+                {_id:cid},
+                {$pull:{products:{product:pid}}},
+                {new:true}
+            )
+           
+        } catch (error) {
+            return new Error(error)
+        }
+    }
+    async deleteCart(cid){
+        try {            
+            return await cartModel.findOneAndUpdate(
+                {_id:cid},
+                {$set:{Products:[]}},
+                {new:true}
+            )
+            
+        } catch (error) {
+            return new Error(error)
+        }
+    }
+    async UpdateCart(cid,updatecart){
+        try {            
+            let respuesta = await cartModel.findOneAndUpdate(
+                {_id:cid},
+                {$set:{products:[updatecart]}},
+                {new:true}
+            )
+            return respuesta
+        } catch (error) {
+            return new Error(error)
+        }
+    }
+    async Updatequantity(cid,pid,quantity){
+        try {            
+            
+            let respuesta = await cartModel.findOneAndUpdate(
+                {_id:cid, 'Products.product':pid},
+                {$inc:{'products.$.quantity':quantity}},
+                {new:true}
+            )
+            return respuesta
+        } catch (error) {
+            return new Error(error)
+        }
+    }
+
 }
 
 module.exports = new CartManagerMongo

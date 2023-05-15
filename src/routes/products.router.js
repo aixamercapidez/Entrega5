@@ -1,23 +1,47 @@
-const {Router} =require('express')
+const { Router } = require('express')
 const productManager = require('../dao/mongo/product.mongo.js')
+const { productModel } = require('../dao/mongo/model/product.model.js')
+const router = Router()
 
-const router =  Router()
-
-router.get('/', async (req,res)=>{
+router.get('/', async (req, res) => {
     try {
-        const products = await productManager.getProducts()
-        res.status(200).send({
-            status: 'success',
-            payload: products
-        })
+        const { page = 1 } = req.query
+        const { limit = 10 } = req.query
+        const {query} = req.query
+      
+        const { sort } = req.query
+        let sortOptions
+        if (sort === 'asc') {
+
+            sortOptions = { price: 1 };
+
+        } else if (sort === 'desc') {
+
+            sortOptions = { price: -1 };
+
+        }
+        let products = await productModel.paginate({query}, { limit: limit, page: page, lean: true,sort: sortOptions })
+
         
+        const { docs, hasPrevPage, hasNextPage, prevPage, nextPage, totalPages } = products
+        res.render('products', {
+            status: 'success',
+            products: docs,
+            hasPrevPage,
+            hasNextPage,
+            prevPage,
+            nextPage,
+            totalPages
+           
+        })
+    
     } catch (error) {
-        cconsole.log(error)
+        console.log(error)
     }
 })
-router.get('/:pid', async (req,res)=>{
+router.get('/:pid', async (req, res) => {
     try {
-        const {pid} = req.params
+        const { pid } = req.params
         let product = await productManager.getProductById(pid)
         res.status(200).send({
             status: 'success',
@@ -27,7 +51,7 @@ router.get('/:pid', async (req,res)=>{
         console.log(error)
     }
 })
-router.post('/', async (req,res)=>{
+router.post('/', async (req, res) => {
     try {
         const newProduct = req.body
 
@@ -42,12 +66,12 @@ router.post('/', async (req,res)=>{
         console.log(error)
     }
 })
-router.put('/:pid', async(req,res)=>{
+router.put('/:pid', async (req, res) => {
     try {
-        const {pid} = req.params
+        const { pid } = req.params
         const updateProduct = req.body
 
-        let updated = await productManager.updateProduct(pid,updateProduct)
+        let updated = await productManager.updateProduct(pid, updateProduct)
 
 
         res.status(200).send({
@@ -58,9 +82,9 @@ router.put('/:pid', async(req,res)=>{
         console.log(error)
     }
 })
-router.delete('/:pid',async (req,res)=>{
+router.delete('/:pid', async (req, res) => {
     try {
-        const {pid} = req.params
+        const { pid } = req.params
         let product = await productManager.deleteProduct(pid)
         res.status(200).send({
             status: 'success',

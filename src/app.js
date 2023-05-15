@@ -71,7 +71,7 @@ io.on('connection', socket => {
     socket.on('message',async(data)=>{
         console.log(data)
         try{
-            const newMessage=await messageModel.create(data)
+            const newMessage =await messageModel.create(data)
             chat.push(newMessage)
             io.emit('messageLogs', chat)
 
