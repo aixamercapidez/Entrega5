@@ -1,5 +1,5 @@
 const { Router } = require('express')
-
+const CartManager = require('../dao/mongo/cart.mongo.js')
 
 const router = Router()
 
@@ -45,4 +45,17 @@ router.post('/register', (req, res) => {
         mensaje: 'Regístro con éxito'
     })
 })
+
+router.get("/carts/:cid", async (req, res) => {
+    const { cid } = req.params;
+    const cart = await CartManager.getCartById(cid)
+    const cartsProducts = cart.Products
+    res.render("carts", {
+      
+     
+      payload:cart,
+      cartsProducts: cartsProducts,
+    })
+  })
+
 module.exports = router

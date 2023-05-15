@@ -50,11 +50,14 @@ GET http://localhost:8080/api/carts/6456caff02edaee996b31da1
 
 
 ### POST 
-POST http://localhost:8080/api/carts/6456caff02edaee996b31da1/product/64504bcd2d67f6b8dc4b2385
+POST http://localhost:8080/api/carts/6456caff02edaee996b31da1/products/64600f478a5c8b883b5a71ac
 
 
 ### DELEtE
 DELETE http://localhost:8080/api/carts/6456caff02edaee996b31da1
+
+###DELETE
+DELETE http://localhost:8080/api/carts/6456caff02edaee996b31da1/product/64600f478a5c8b883b5a71ac
 
 
 // mensajes

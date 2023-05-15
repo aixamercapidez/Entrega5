@@ -35,30 +35,7 @@ router.post('/', async (request, response)=>{
     }
 })
 
-/*router.get('/:cid', async (req,res)=>{
-    try {
-        const {cid} = req.query
-        let carts = await cartModel.paginate({}, {  lean: true })
-
-        
-        const { docs, hasPrevPage, hasNextPage, prevPage, nextPage, totalPages } = carts
-        res.render('carts', {
-            status: 'success',
-            carts: docs,
-            hasPrevPage,
-            hasNextPage,
-            prevPage,
-            nextPage,
-            totalPages
-           
-        })
-
-
-    } catch (error) {
-        console.log(error)
-    }
-})*/
-/*router.get('/:cid', async (req,res)=>{
+router.get('/:cid', async (req,res)=>{
     try {
         const {cid} = req.params
         let cart = await CartManager.getCartById(cid)
@@ -72,25 +49,26 @@ router.post('/', async (request, response)=>{
     } catch (error) {
         console.log(error)
     }
-})*/
-router.get('/:cid', async (req,res)=>{
-    try {
-        const {cid} = req.params
-        let cart = await CartManager.getCartById(cid)
-        res.render('carts',{
-            status: 'success',
-            payload: cart,
-            carts:cart
-        })
-
-
-
-    } catch (error) {
-        console.log(error)
-    }
 })
 
-router.post('/:cid/product/:pid', async (req, res)=>{
+// router.get('/:cid', async (req,res)=>{
+//     try {
+//         const {cid} = req.params
+//         let cart = await CartManager.getCartById(cid)
+//         res.render('carts',{
+//             status: 'success',
+//             payload: cart,
+//             carts:cart
+//         })
+
+
+
+//     } catch (error) {
+//         console.log(error)
+//     }
+// })
+
+router.post('/:cid/products/:pid', async (req, res)=>{
     try{
         const {cid} = req.params
         const {pid} = req.params
