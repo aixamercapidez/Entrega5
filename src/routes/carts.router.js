@@ -35,30 +35,13 @@ router.post('/', async (request, response)=>{
     }
 })
 
-router.get('/:cid', async (req,res)=>{
-    try {
-        const {cid} = req.params
-        let cart = await CartManager.getCartById(cid)
-        res.status(200).send({
-            status: 'success',
-            payload: cart
-        })
-
-
-
-    } catch (error) {
-        console.log(error)
-    }
-})
-
 // router.get('/:cid', async (req,res)=>{
 //     try {
 //         const {cid} = req.params
 //         let cart = await CartManager.getCartById(cid)
-//         res.render('carts',{
+//         res.status(200).send({
 //             status: 'success',
-//             payload: cart,
-//             carts:cart
+//             payload: cart
 //         })
 
 
@@ -67,6 +50,23 @@ router.get('/:cid', async (req,res)=>{
 //         console.log(error)
 //     }
 // })
+
+router.get('/:cid', async (req,res)=>{
+    try {
+        const {cid} = req.params
+        let cart = await CartManager.getCartById(cid)
+        res.render('carts',{
+            status: 'success',
+            payload: cart,
+            carts:cart
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+
+
 
 router.post('/:cid/products/:pid', async (req, res)=>{
     try{

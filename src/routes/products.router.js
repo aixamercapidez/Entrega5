@@ -7,8 +7,8 @@ router.get('/', async (req, res) => {
     try {
         const { page = 1 } = req.query
         const { limit = 10 } = req.query
-        const {query} = req.query
-      
+        const {category} = req.query
+        const {status} = req.query
         const { sort } = req.query
         let sortOptions
         if (sort === 'asc') {
@@ -20,7 +20,14 @@ router.get('/', async (req, res) => {
             sortOptions = { price: -1 };
 
         }
-        let products = await productModel.paginate({query}, { limit: limit, page: page, lean: true,sort: sortOptions })
+let query ={}
+        if(category){
+            query={category:category}
+        }
+        if(status){
+            query={status:status}
+        }
+        let products = await productModel.paginate(query,{ limit: limit, page: page, lean: true,sort: sortOptions})
 
         
         const { docs, hasPrevPage, hasNextPage, prevPage, nextPage, totalPages } = products

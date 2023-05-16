@@ -14,23 +14,20 @@
 
 </div> --}}
 
-<h1>Su carrito {{cart._id}} 🛒</h1>
+<h1>Carrito número: {{carts._id}} </h1>
 
-{{#if cartsProducts}}
+{{#if carts}}
   <section class="cartContainer">
-    {{#each cartsProducts}}
+    {{#each carts.Products}}
       <div class="cartProduct">
-        <h3>Nombre: {{Products.idProduct.title}}</h3>
+        <h3>Nombre: {{idProduct.title}}</h3>
         <h4>Precio:{{idProduct.price}}</h4>
         {{!-- <img class="img" src="{{product.thumbnail}}" /> --}}
         <h4>Cantidad: {{quantity}}</h4>
-        <div>
-          <button class="plusButton" id="plusOne">+</button>
-          <button class="minusButton" id="minusOne">-</button>
-        </div>
+        
       </div>
     {{/each}}
-    <h2><a class="finish" href="">Terminar compra</a></h2>
+    
   </section>
 {{else}}
   <h3>No hay productos agregados!</h3>

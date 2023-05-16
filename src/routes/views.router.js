@@ -45,17 +45,28 @@ router.post('/register', (req, res) => {
         mensaje: 'Regístro con éxito'
     })
 })
+router.get("/realTimeProducts", async (req, res) => {
+    const { payload } = await productManager.getProducts();
+    const object = {
+        style: "index.css",
+        title: "Productos en tiempo real",
+        products: payload,
+    };
+    res.render("realTimeProducts", object);
+});
 
-router.get("/carts/:cid", async (req, res) => {
-    const { cid } = req.params;
-    const cart = await CartManager.getCartById(cid)
-    const cartsProducts = cart.Products
-    res.render("carts", {
-      
-     
-      payload:cart,
-      cartsProducts: cartsProducts,
-    })
-  })
+router.get('/:cid', async (req,res)=>{
+    try {
+        const {cid} = req.params
+        let cart = await CartManager.getCartById(cid)
+        res.render('carts',{
+            status: 'success',
+            payload: cart,
+            carts:cart
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 module.exports = router
