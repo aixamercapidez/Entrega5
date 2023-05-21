@@ -1,10 +1,21 @@
 const { Router } = require('express')
 const productManager = require('../dao/mongo/product.mongo.js')
 const { productModel } = require('../dao/mongo/model/product.model.js')
+const { userModel } = require('../dao/mongo/model/user.model.js')
 const router = Router()
 
 router.get('/', async (req, res) => {
     try {
+       
+
+      
+        const {first_name} = req.session.user
+        const {last_name} = req.session.user
+        const {email} = req.session.user
+       
+        const {role} = req.session.user
+        
+        
         const { page = 1 } = req.query
         const { limit = 10 } = req.query
         const {category} = req.query
@@ -38,8 +49,10 @@ let query ={}
             hasNextPage,
             prevPage,
             nextPage,
-            totalPages
-           
+            totalPages,
+            first_name,
+            last_name,
+            role
         })
     
     } catch (error) {

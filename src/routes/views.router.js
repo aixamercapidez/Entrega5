@@ -55,18 +55,17 @@ router.get("/realTimeProducts", async (req, res) => {
     res.render("realTimeProducts", object);
 });
 
-router.get('/:cid', async (req,res)=>{
-    try {
-        const {cid} = req.params
-        let cart = await CartManager.getCartById(cid)
-        res.render('carts',{
-            status: 'success',
-            payload: cart,
-            carts:cart
-        })
-    } catch (error) {
-        console.log(error)
-    }
+router.get('/login', (req, res) => {
+    res.render('login', {
+        style: 'index.css'
+    })
 })
+
+router.get('/register', (req, res) => {
+    res.render('registerForm', {
+        style: 'index.css'
+    })
+})
+
 
 module.exports = router

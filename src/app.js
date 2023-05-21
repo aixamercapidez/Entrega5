@@ -3,9 +3,30 @@ const {connectDb} = require('./config/configServer.js')
 const routerServer = require('./routes')
 const logger = require('morgan')
 const viewsRouter = require('./routes/views.router')
+const session = require('express-session')
+
+const cookieParser = require('cookie-parser')
 
 const app = express()
 const PORT = 8080
+
+const FileStore  = require('session-file-store')
+const {create} = require('connect-mongo') 
+app.use(cookieParser('P@l@braS3cr3t0'))
+
+app.use(session({
+    store: create({
+        mongoUrl: 'mongodb+srv://aixamercapidez:loppol123321@aixamercapidez.kzlelds.mongodb.net/ecommerce?retryWrites=true&w=majority',
+        mongoOptions: {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        },
+        ttl: 1000000*6000
+    }),
+    secret: 'secretCoder',
+    resave: false,
+    saveUninitialized: false
+})) 
 
 connectDb()
 
