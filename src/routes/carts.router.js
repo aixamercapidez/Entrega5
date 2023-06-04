@@ -35,21 +35,7 @@ router.post('/', async (request, response)=>{
     }
 })
 
-// router.get('/:cid', async (req,res)=>{
-//     try {
-//         const {cid} = req.params
-//         let cart = await CartManager.getCartById(cid)
-//         res.status(200).send({
-//             status: 'success',
-//             payload: cart
-//         })
 
-
-
-//     } catch (error) {
-//         console.log(error)
-//     }
-// })
 
 router.get('/:cid', async (req,res)=>{
     try {

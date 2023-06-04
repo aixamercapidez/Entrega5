@@ -5,6 +5,9 @@ const logger = require('morgan')
 const viewsRouter = require('./routes/views.router')
 const session = require('express-session')
 
+const { initPassport, initPassortGithub } = require('./config/passport.config.js')
+const passport = require('passport')
+
 const cookieParser = require('cookie-parser')
 
 const app = express()
@@ -27,7 +30,10 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 })) 
-
+initPassport()
+initPassortGithub()
+passport.use(passport.initialize())
+passport.use(passport.session())
 connectDb()
 
 app.use(express.json())

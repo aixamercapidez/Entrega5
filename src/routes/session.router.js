@@ -1,79 +1,40 @@
 const { Router } = require('express')
 const { auth } = require('../middlewares/autenticacion.middleware')
 const { userModel } = require('../dao/mongo/model/user.model')
+const {createHash, isValidPassword}=require('../utils/bcryptHash')
+const passport = require('passport')
 
 const router = Router()
 
 
-router.post('/login', async (req, res) => {
-    const { email, password } = req.body
-    // validar email y password
 
-    // vamos a tener una función para validar el password
-    const userDB = await userModel.findOne({ email, password })
+router.post('/login', passport.authenticate('login', {failureRedirect:'/failurelogin'}),async (req,res)=>{
+    if (!req.user) return res.status(401).send({status:'error',message:'invalid credential'})
+    req.session.user={
+        first_name: req.user.first_name,
+        last_name: req.user.last_name,
+        email: req.user.email
 
-    if (!userDB) return res.send({ status: 'error', message: 'No existe ese usuario, revisar' })
-    let role
-    if (email === 'adminCoder@coder.com' && password === 'adminCod3r123') {
-        role = "admin"
-    } else {
-        role = "user"
+
     }
-    req.session.user = {
-        first_name: userDB.first_name,
-        last_name: userDB.last_name,
-        email: userDB.email,
-       role: role,
-    }
+    res.send({status:'success',message:'user register'})
+})   
 
-    //  res.send({
-    //      status: 'success',
-    //     message: 'login success',
-    //      session: req.session.user
-    //  })
-    res.redirect('http://localhost:8080/api/products')
+router.get('/failurelogin', (req,res)=>{
+    console.log("register failure")
+    res.send({status:'error'})
 })
 
+router.post('/register', passport.authenticate('register', {
+    failureRedirect: '/failure',
+    successRedirect: '/login'
+}),async (req,res) =>{
+res.send({status:'succes', message:'user created'})
+})
 
-router.post('/register', async (req, res) => {
-    try {
-        const { username, first_name, last_name, email, password } = req.body
-        //validar si vienen distintos de vacios && caracteres especiales
-
-        // validar si existe mail+
-        const existUser = await userModel.findOne({ email })
-
-        if (existUser) return res.send({ status: 'error', message: 'el email ya está registrado' })
-
-        // otra forma
-        // const newUser = new userModel({
-        //     username,
-        //     first_name,
-        //     last_name, 
-        //     email, 
-        //     password 
-        // })
-        // await newUser.save()
-     
-   
-        const newUser = {
-            username,
-            first_name,
-            last_name,
-            email,
-            password,
-            
-        }
-        let resultUser = await userModel.create(newUser)
-
-
-
-
-        res.redirect('http://localhost:8080/login')
-    } catch (error) {
-        console.log(error)
-    }
-
+router.get('/failure', (req,res)=>{
+    console.log("register failure")
+    res.send({status:'error'})
 })
 
 router.get('/logout', (req, res) => {
@@ -84,6 +45,13 @@ router.get('/logout', (req, res) => {
         res.redirect('http://localhost:8080/login')
     })
 })
+
+
+router.get('/github', passport.authenticate('github', {scope: ['user:email']}), ()=>{})
+router.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/views/login'}), async (req, res)=>{
+    req.session.user = req.user
+     res.redirect('/api/productos')
+ })
 
 
 
