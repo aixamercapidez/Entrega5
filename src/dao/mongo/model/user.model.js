@@ -6,7 +6,6 @@ const collection = 'usuarios'
 const userSchema = new Schema ({
     first_name:{
         type: String,
-        index: true
     },
     last_name:{
         type:String
@@ -16,6 +15,8 @@ const userSchema = new Schema ({
         require:true,
         unique:true
     },
+    date_of_birth:{ Date},
+    role:String,
    password:String,
   
 

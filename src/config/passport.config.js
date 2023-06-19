@@ -11,15 +11,22 @@ const initPassport = () => {
         passReqToCallback: true,
         usernameField: 'email'
     }, async (req, username, password, done)=>{
-        const {firts_name, last_name} = req.body
+        const {first_name, last_name,date_of_birth,email} = req.body
+        let role = 'user'
+        if(email === 'adminCoder@coder.com' && password === 'adminCod3r123'){
+            role = 'admin'
+        }
         try {
             let userDB = await userModel.findOne({email: username})
             if (userDB) return done(null, false)
+           
 
             let newUser = {
-                firts_name,
+                first_name,
                 last_name,
                 email: username,
+                date_of_birth,
+                role:role,
                 password: createHash(password)
             }
 

@@ -3,9 +3,11 @@ const { auth } = require('../middlewares/autenticacion.middleware')
 const { userModel } = require('../dao/mongo/model/user.model')
 const {createHash, isValidPassword}=require('../utils/bcryptHash')
 const passport = require('passport')
+const { passportAuth } = require('../config/passportAuth')
+const { authorizaton } = require('../config/passportAuthorization')
+
 
 const router = Router()
-
 
 
 router.post('/login', passport.authenticate('login', {failureRedirect:'/failurelogin'}),async (req,res)=>{
@@ -47,10 +49,26 @@ router.get('/logout', (req, res) => {
 })
 
 
+
+router.get('/current', 
+
+
+(req, res)=> {
+    const {first_name} = req.session.user
+    const {last_name} = req.session.user
+    const {email} = req.session.user
+   
+    const {role} = req.session.user
+    res.send({first_name,
+        last_name,
+        email,
+        role})
+})
+
 router.get('/github', passport.authenticate('github', {scope: ['user:email']}), ()=>{})
 router.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/views/login'}), async (req, res)=>{
     req.session.user = req.user
-     res.redirect('/api/productos')
+     res.redirect('/api/products')
  })
 
 
