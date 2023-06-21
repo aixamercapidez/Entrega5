@@ -15,10 +15,10 @@ const userSchema = new Schema ({
         require:true,
         unique:true
     },
-    date_of_birth:{ Date},
+    date_of_birth:Date,
     role:String,
    password:String,
-  
+  cart:String,
 
 })
 
